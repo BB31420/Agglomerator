@@ -1,27 +1,40 @@
 import tkinter as tk
+from tkinter import filedialog
+from tkinter import messagebox
 import customtkinter as ctk
 import os
 import subprocess
-from tkinter import filedialog
 import tempfile
-from tkinter import messagebox
 import ffmpy
 import shlex
 from pathlib import Path
-from ffmpy import FFprobe
-import re
-from video_utils import combine_videos
+from video_utils import VideoProcessor
 
 ctk.set_appearance_mode("System")
 ctk.set_default_color_theme("blue")
 
 class VideoCombiner(ctk.CTk):
+    """
+    A GUI application for combining multiple video files into a single video.
+
+    Attributes:
+        file_listbox (tk.Listbox): The listbox widget to display the selected video files.
+        add_file_button (ctk.CTkButton): The button to add video files.
+        remove_file_button (ctk.CTkButton): The button to remove selected video files.
+        move_up_button (ctk.CTkButton): The button to move the selected video file up in the list.
+        move_down_button (ctk.CTkButton): The button to move the selected video file down in the list.
+        combine_button (ctk.CTkButton): The button to initiate the video combining process.
+    """
+
     def __init__(self):
         super().__init__()
 
         self.init_ui()
 
     def init_ui(self):
+        """
+        Initializes the user interface of the application.
+        """
         self.title("Agglomerator")
         self.geometry("700x600")
         self.configure(padx=10, pady=10)
@@ -29,7 +42,7 @@ class VideoCombiner(ctk.CTk):
         self.columnconfigure(0, weight=1)
         self.rowconfigure(0, weight=1)
 
-        self.file_listbox = tk.Listbox(self, selectmode=tk.SINGLE, exportselection=False)
+        self.file_listbox = tk.Listbox(self, selectmode=tk.SINGLE, exportselection=False, font=("Roboto Condensed", 20))
         self.file_listbox.grid(row=0, column=0, columnspan=5, sticky="nsew")
 
         self.add_file_button = ctk.CTkButton(self, text="Add Video File", command=self.add_file)
@@ -53,33 +66,56 @@ class VideoCombiner(ctk.CTk):
         self.rowconfigure(1, weight=0)
 
     def add_file(self):
+        """
+        Opens a file dialog to select video files and adds them to the file listbox.
+        """
         file_paths = filedialog.askopenfilenames(multiple=True)
         if file_paths:
             for file_path in file_paths:
                 self.file_listbox.insert(tk.END, file_path)
 
-
     def remove_file(self):
+        """
+        Removes the selected video file from the file listbox.
+        """
         selected_index = self.file_listbox.curselection()
         if selected_index:
             self.file_listbox.delete(selected_index)
 
     def move_file(self, direction):
+        """
+        Moves the selected video file up or down in the file listbox.
+
+        Args:
+            direction (int): The direction to move the file (-1 to move up, 1 to move down).
+        """
+        
         selected_index = self.file_listbox.curselection()
         if selected_index and 0 <= selected_index[0] + direction < self.file_listbox.size():
-            self.file_listbox.insert(selected_index[0] + direction, self.file_listbox.get(selected_index))
-            self.file_listbox.delete(selected_index[0])
-            self.file_listbox.select_set(selected_index[0] + direction)
+            selected_item = self.file_listbox.get(selected_index)
+            self.file_listbox.delete(selected_index)
+            new_index = selected_index[0] + direction
+            self.file_listbox.insert(new_index, selected_item)
+            self.file_listbox.select_set(new_index)
 
     def combine_videos(self):
+        """
+        Combines the selected video files into a single video.
+
+        Displays a save file dialog to select the output file path.
+        Shows a success message box upon successful combination.
+        """
         file_paths = self.file_listbox.get(0, tk.END)
         output_file_path = filedialog.asksaveasfilename(defaultextension=".mp4", filetypes=[("Video Files", "*.mp4")])
         if not output_file_path:
             return
 
-        combine_videos(file_paths, output_file_path)
+        result = VideoProcessor.combine_videos(file_paths, output_file_path)
 
-        messagebox.showinfo("Success", "Video files combined successfully.")
+        if result:
+            messagebox.showinfo("Success", "Video files combined successfully.")
+        else:
+            messagebox.showerror("Error", "Failed to combine video files.")
 
 
 if __name__ == "__main__":

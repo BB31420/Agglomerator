@@ -10,6 +10,8 @@ Agglomerator requires Python 3 and the following dependencies:
 - tkinter
 - customtkinter
 - ffmpy
+
+
 You can install the dependencies using pip:
 ```
 pip install tkinter customtkinter ffmpy

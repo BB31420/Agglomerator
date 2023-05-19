@@ -2,6 +2,8 @@
 
 Agglomerator is a simple GUI application built with Python's Tkinter library for combining multiple video files into a single file.
 
+![image](https://i.imgur.com/jz7hOE2.png)
+
 ## Installation
 Agglomerator requires Python 3 and the following dependencies:
 

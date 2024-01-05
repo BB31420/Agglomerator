@@ -17,6 +17,10 @@ Agglomerator requires Python 3 and the following dependencies:
 git clone git@github.com:BB31420/Agglomerator.git
 ```
 
+```
+cd Agglomerator
+```
+
 ### Virtual Environment
 You should setup a virtual environment in the project's directory to prevent conflicts between packages. 
 * Linux:

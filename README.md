@@ -18,12 +18,12 @@ git clone git@github.com:BB31420/Agglomerator.git
 ```
 
 ### Virtual Environment
-You should setup a virtual environemnt in the project's directory. This stops conflicts between packages. 
+You should setup a virtual environment in the project's directory to prevent conflicts between packages. 
 * Linux:
 ```
 python3 -m venv .venv
 ```
-then
+then:
 ```
 source .venv/bin/activate
 ```

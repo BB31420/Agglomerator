@@ -18,7 +18,7 @@ git clone git@github.com:BB31420/Agglomerator.git
 ```
 
 ```
-cd Agglomerator
+cd Agglomerator/
 ```
 
 ### Virtual Environment

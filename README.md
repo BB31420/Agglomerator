@@ -24,7 +24,9 @@ You should setup a virtual environemnt in the project's directory. This stops co
 python3 -m venv .venv
 ```
 then
+```
 source .venv/bin/activate
+```
 
 You can install the dependencies using pip:
 ```

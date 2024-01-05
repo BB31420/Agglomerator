@@ -14,7 +14,7 @@ Agglomerator requires Python 3 and the following dependencies:
 
 You can install the dependencies using pip:
 ```
-pip install tkinter customtkinter ffmpy
+pip install -r requirements.txt
 ```
 Once the dependencies are installed, download or clone this repository.
 

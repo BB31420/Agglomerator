@@ -12,17 +12,29 @@ Agglomerator requires Python 3 and the following dependencies:
 - ffmpy
 - packaging
 
+### Clone the Repository
+```
+git clone git@github.com:BB31420/Agglomerator.git
+```
+
+### Virtual Environment
+You should setup a virtual environemnt in the project's directory. This stops conflicts between packages. 
+* Linux:
+```
+python3 -m venv .venv
+```
+then
+source .venv/bin/activate
 
 You can install the dependencies using pip:
 ```
 pip install -r requirements.txt
 ```
-Once the dependencies are installed, download or clone this repository.
 
 ## Usage
 To run Agglomerator, navigate to the directory where the Agglomerator.py file is located and run the following command:
 ```
-python Agglomerator.py
+python3 Agglomerator.py
 ```
 The Agglomerator GUI will open. To add video files, click the "Add Video File" button and select one or more video files from the file dialog. The supported video file formats are: mp4, mkv, avi, webm, flv, mov, and wmv.
 
